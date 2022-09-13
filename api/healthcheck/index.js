@@ -1,7 +1,3 @@
-/**
- * Healthcheck API
- * @module api/healthcheck
- */
 const express = require('express');
 
 const router = express.Router();

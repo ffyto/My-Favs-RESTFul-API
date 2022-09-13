@@ -7,7 +7,7 @@ const {
   updateFavListHandler,
   deleteFavListHandler,
   getAllUserFavListsHandler,
-} = require('./favList.controller');
+} = require('./favLists.controller');
 
 const router = express.Router();
 

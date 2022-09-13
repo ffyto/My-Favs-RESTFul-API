@@ -1,4 +1,4 @@
-const FavList = require('./favList.model');
+const FavList = require('./favLists.model');
 
 function getAllFavLists() {
   return FavList.find({});

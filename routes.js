@@ -1,7 +1,7 @@
 const user = require('./api/users/users.routes');
 const healthcheck = require('./api/healthcheck/index');
 const authLocal = require('./auth/local/local.routes');
-const favList = require('./api/favList/favList.routes');
+const favList = require('./api/favLists/favLists.routes');
 
 function routes(app) {
   app.use('/api/healthcheck', healthcheck);

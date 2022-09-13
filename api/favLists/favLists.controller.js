@@ -1,4 +1,4 @@
-const services = require('./favList.services');
+const services = require('./favLists.services');
 
 const {
   addFavListToUser,

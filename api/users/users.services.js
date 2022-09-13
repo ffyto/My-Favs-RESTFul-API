@@ -8,10 +8,6 @@ function getSingleUser(id) {
   return User.findById(id).populate({ path: 'favLists', select: 'name' });
 }
 
-function findOneUser(query) {
-  return User.findOne(query);
-}
-
 function createUser(user) {
   return User.create(user);
 }
@@ -43,7 +39,6 @@ function deleteFavListAtUser(id, favListId) {
 module.exports = {
   getSingleUser,
   getAllUsers,
-  findOneUser,
   addFavListToUser,
   deleteFavListAtUser,
   createUser,
