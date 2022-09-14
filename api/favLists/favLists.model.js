@@ -5,8 +5,7 @@ const favListSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      minLength: 3,
-      maxLength: 30,
+      unique: true,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,

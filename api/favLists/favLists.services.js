@@ -27,15 +27,15 @@ function deleteFavList(id) {
 function addFavToFavList(id, favId) {
   return FavList.findByIdAndUpdate(
     id,
-    { $push: { columns: favId } },
+    { $push: { favs: favId } },
     { new: true }
   );
 }
 
-function deleteFavAtFavList(id, favId) {
+function deleteFavAtFavList(favId, id) {
   return FavList.findByIdAndUpdate(
     id,
-    { $pull: { columns: favId } },
+    { $pull: { favs: favId } },
     { multi: true }
   );
 }

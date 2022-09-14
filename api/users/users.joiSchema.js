@@ -6,7 +6,9 @@ const loginSchema = Joi.object({
     .required(),
 
   password: Joi.string()
-    .pattern(/^[a-zA-Z0-9]{3,30}$/)
+    .pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/
+    )
     .required(),
 });
 
@@ -29,7 +31,7 @@ const registerSchema = Joi.object({
 
   password: Joi.string()
     .pattern(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,15}$/
     )
     .required(),
 

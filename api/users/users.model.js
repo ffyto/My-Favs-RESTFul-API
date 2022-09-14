@@ -31,13 +31,9 @@ const UserSchema = new mongoose.Schema(
     favLists: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Fav',
+        ref: 'FavList',
       },
     ],
-    isActive: {
-      type: Boolean,
-      default: false,
-    },
     passwordResetActivationToken: String,
     passwordResetActivationExpires: Date,
   },

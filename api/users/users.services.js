@@ -8,6 +8,10 @@ function getSingleUser(id) {
   return User.findById(id).populate({ path: 'favLists', select: 'name' });
 }
 
+function findUserByEmail(email) {
+  return User.findOne({ email });
+}
+
 function createUser(user) {
   return User.create(user);
 }
@@ -23,7 +27,7 @@ function deleteUser(id) {
 function addFavListToUser(id, favListId) {
   return User.findByIdAndUpdate(
     id,
-    { $push: { boards: favListId } },
+    { $push: { favLists: favListId } },
     { new: true }
   );
 }
@@ -31,7 +35,7 @@ function addFavListToUser(id, favListId) {
 function deleteFavListAtUser(id, favListId) {
   return User.findByIdAndUpdate(
     id,
-    { $pull: { boards: favListId } },
+    { $pull: { favLists: favListId } },
     { multi: true }
   );
 }
@@ -44,4 +48,5 @@ module.exports = {
   createUser,
   updateUser,
   deleteUser,
+  findUserByEmail,
 };
