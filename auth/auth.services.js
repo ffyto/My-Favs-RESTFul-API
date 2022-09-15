@@ -39,10 +39,6 @@ async function isAuthenticated(req, res, next) {
   }
   req.user = user;
 
-  console.log(
-    '🚀 ~ file: auth.services.js ~ line 49 ~ isAuthenticated ~ user',
-    user
-  );
   next();
   return null;
 }
