@@ -16,9 +16,9 @@ const {
 
 async function getAllFavListsHandler(_req, res) {
   try {
-    const favs = await getAllFavLists();
-    console.log('Showing all favLists');
-    return res.status(200).json(favs);
+    const favLists = await getAllFavLists();
+    console.log('[SUCCESS]: Showing all favLists');
+    return res.status(200).json({ favLists, message: 'Showing all favLists' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -29,8 +29,10 @@ async function getAllUserFavListsHandler(req, res) {
   const { id } = req.user;
   try {
     const userFavs = await getAllUserFavLists(id);
-    console.log('Showing all User favLists');
-    return res.status(200).json(userFavs);
+    console.log('[SUCCESS]: Showing all User favLists');
+    return res
+      .status(200)
+      .json({ userFavs, message: 'Showing all user favLists' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(501).json({ error });
@@ -40,14 +42,14 @@ async function getAllUserFavListsHandler(req, res) {
 async function getSingleFavListHandler(req, res) {
   const { id } = req.params;
   try {
-    const fav = await getSingleFavList(id);
+    const favList = await getSingleFavList(id);
 
-    if (!fav) {
-      console.log('FavList not found');
+    if (!favList) {
+      console.log('[WARINING]: FavList not found');
       return res.status(404).json({ message: 'FavList not found' });
     }
-    console.log('Showing favList', fav);
-    return res.json(fav);
+    console.log('[SUCCESS]: Showing favList', favList);
+    return res.json({ favList, message: `Showing favList id:${favList.id}` });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -61,11 +63,13 @@ async function createFavListHandler(req, res) {
 
   try {
     const favList = await createFavList(favListData);
-
     await addFavListToUser(id, favList.id);
-    console.log('FavList created');
+    console.log('[SUCCESS]: FavList created');
 
-    return res.status(201).json(favList);
+    return res.status(201).json({
+      favList,
+      message: `FavList successfuly created`,
+    });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
@@ -80,10 +84,10 @@ async function updateFavListHandler(req, res) {
     const favList = await updateFavList(id, updateFavListData);
 
     if (!favList) {
-      console.log('FavList not found');
+      console.log('[WARINING]: FavList not found');
       return res.status(404).json({ message: 'FavList not found' });
     }
-    console.log('User id:', id, 'Data updated:', updateFavListData);
+    console.log('[SUCCESS]: User id:', id, 'Data updated:', updateFavListData);
     return res.json(favList);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -101,10 +105,10 @@ async function deleteFavListHandler(req, res) {
 
     fav = await deleteFavList(id);
     if (!fav) {
-      console.log('FavList not found');
+      console.log('[WARINING]: FavList not found');
       return res.status(404).json({ message: 'FavList not found' });
     }
-
+    console.log(`[SUCCESS]: FavList ${id} eliminated`);
     return res.json({ message: 'FavList eliminated' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);

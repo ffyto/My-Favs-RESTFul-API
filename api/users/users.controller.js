@@ -7,8 +7,8 @@ const { createUser, getAllUsers, getSingleUser, updateUser, deleteUser } =
 
 async function getAllUsersHandler(req, res) {
   try {
-    console.log('Showing all users');
     const users = await getAllUsers();
+    console.log('[SUCCESS]: Showing all users');
     return res.status(200).json(users);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -22,11 +22,12 @@ async function getSingleUserHandler(req, res) {
     const user = await getSingleUser(id);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: '[WARNING]: User not found' });
     }
-
+    console.log(`[SUCCESS]: Showing user ${user.id}`);
     return res.json(user);
   } catch (error) {
+    console.error(`[ERROR]: ${error}`);
     return res.status(500).json({ error });
   }
 }
@@ -45,7 +46,7 @@ async function createUserHandler(req, res) {
 
     const user = await createUser(userData);
 
-    console.log('User created successfully', user);
+    console.log('[SUCCESS]: User created successfully', user);
     return res.status(201).json(user.profile);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -59,7 +60,7 @@ async function updateUserHandler(req, res) {
 
   try {
     const user = await updateUser(id, userUpdate);
-    console.log('User id:', id, 'Data updated:', userUpdate);
+    console.log('[SUCCESS]: User id:', id, 'Data updated:', userUpdate);
     return res
       .status(200)
       .json({ message: 'User updated', profile: user.profile });
@@ -74,7 +75,7 @@ async function deleteUserHandler(req, res) {
 
   try {
     await deleteUser(id);
-    console.log(`User ${id} eliminated`);
+    console.log(`[SUCCESS]: User ${id} eliminated`);
     return res.status(200).json({ message: 'User eliminated' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);

@@ -1,5 +1,5 @@
 const express = require('express');
-const { isAuthenticated } = require('../../auth/auth.services');
+
 const {
   createFavListHandler,
   getAllFavListsHandler,
@@ -33,6 +33,37 @@ const router = express.Router();
  *                $ref: '#/components/schemas/serverError'
  */
 router.get('/', getAllFavListsHandler);
+
+/**
+ * @openapi
+ *  /api/favLists/user:
+ *    get:
+ *      tags:
+ *      - FavLists
+ *      security:
+ *      - bearerAuth: String
+ *      description: Gets all user's favLists
+ *      responses:
+ *        200:
+ *          description: An array of all user's favLists
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/favLists'
+ *        401:
+ *          description: Unauthorized
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/unauthorized'
+ *        500:
+ *          description: Server Error
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/serverError'
+ */
+router.get('/user', getAllUserFavListsHandler);
 
 /**
  * @openapi
@@ -70,37 +101,6 @@ router.get('/:id', getSingleFavListHandler);
 
 /**
  * @openapi
- *  /api/favLists/user:
- *    get:
- *      tags:
- *      - FavLists
- *      security:
- *      - bearerAuth: String
- *      description: Gets all user's favLists
- *      responses:
- *        200:
- *          description: An array of all user's favLists
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/favLists'
- *        401:
- *          description: Unauthorized
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/unauthorized'
- *        500:
- *          description: Server Error
- *          content:
- *            application/json:
- *              schema:
- *                $ref: '#/components/schemas/serverError'
- */
-router.get('/user', isAuthenticated, getAllUserFavListsHandler);
-
-/**
- * @openapi
  *  /api/favLists:
  *    post:
  *      tags:
@@ -135,7 +135,7 @@ router.get('/user', isAuthenticated, getAllUserFavListsHandler);
  *              schema:
  *                $ref: '#/components/schemas/serverError'
  */
-router.post('/', isAuthenticated, createFavListHandler);
+router.post('/', createFavListHandler);
 
 /**
  * @openapi
@@ -170,7 +170,7 @@ router.post('/', isAuthenticated, createFavListHandler);
  *                $ref: '#/components/schemas/serverError'
  */
 
-router.patch('/:id', isAuthenticated, updateFavListHandler);
+router.patch('/:id', updateFavListHandler);
 
 /**
  * @openapi
@@ -204,6 +204,6 @@ router.patch('/:id', isAuthenticated, updateFavListHandler);
  *              schema:
  *                $ref: '#/components/schemas/serverError'
  */
-router.delete('/:id', isAuthenticated, deleteFavListHandler);
+router.delete('/:id', deleteFavListHandler);
 
 module.exports = router;

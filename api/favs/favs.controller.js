@@ -16,8 +16,8 @@ const {
 
 async function getAllFavsHandler(req, res) {
   try {
-    console.log('Showing all favs');
     const favs = await getAllFavs();
+    console.log('[SUCCESS]: Showing all favs');
     return res.status(200).json(favs);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -29,7 +29,7 @@ async function getAllUserFavsHandler(req, res) {
   const { id } = req.user;
   try {
     const userFavs = await getAllUserFavs(id);
-    console.log(`Showing all user ${id} favs`);
+    console.log(`[SUCCESS]: Showing all user ${id} favs`);
     return res.status(200).json(userFavs);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -42,10 +42,10 @@ async function getSingleFavHandler(req, res) {
   try {
     const fav = await getSingleFav(id);
     if (!fav) {
-      console.log('Fav not found');
+      console.log('[WARINING]: Fav not found');
       return res.status(404).json({ message: 'Fav not found' });
     }
-    console.log('Showing fav', fav);
+    console.log('[SUCCESS]: Showing fav', fav);
     return res.status(200).json(fav);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -62,7 +62,7 @@ async function createFavHandler(req, res) {
   try {
     const fav = await createFav(FavData);
     await addFavToFavList(favListId, fav.id);
-    console.log('Fav created', fav);
+    console.log('[SUCCESS]: Fav created', fav);
     return res.status(201).json(fav);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -76,10 +76,10 @@ async function updateFavHandler(req, res) {
   try {
     const fav = await updateFav(id, favData);
     if (!fav) {
-      console.log('Fav not found');
+      console.log('[WARINING]: Fav not found');
       return res.status(404).json({ message: 'Fav not found' });
     }
-    console.log('Fav id:', id, 'Data updated:', favData);
+    console.log('[SUCCESS]: Fav id:', id, 'Data updated:', favData);
     return res.status(200).json(fav);
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
@@ -92,12 +92,12 @@ async function deleteFavHandler(req, res) {
   try {
     const fav = await getSingleFav(id);
     if (!fav) {
-      console.log('Fav not found');
+      console.log('[WARINING]: Fav not found');
       return res.status(404).json({ message: 'Fav not found' });
     }
     await deleteFavAtFavList(id, fav.favList);
     await deleteFav(id);
-    console.log(`Fav ${id} eliminated`);
+    console.log(`[SUCCESS]: Fav ${id} eliminated`);
     return res.json({ message: 'Fav deleted successfully' });
   } catch (error) {
     console.error(`[ERROR]: ${error}`);
